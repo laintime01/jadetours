@@ -10,7 +10,7 @@
       rounded="lg"
     >
       <v-card-title class="text-center">
-        <div class="text-h4">Jade Tours</div>
+        <div class="text-h4 font-weight-black">Jade Tours</div>
         <div class="text-subtitle-1">Online Booking System</div>
       </v-card-title>
 
@@ -91,7 +91,7 @@
         snackbar: {
           show: false,
           timeout: 2000,
-          message: 'Please fill in all required fields'
+          message: ''
         },
         // 初始化表单数据
         first: null,
@@ -102,23 +102,23 @@
       }
     },
     methods:{
-    onClickLogin(){
-      this.$router.push('/'); // 跳转到主页
-    },
+      onClickLogin(){
+        this.$router.push('/'); // 跳转到主页
+      },
 
-    onClickRegister() {
-      if (!this.first || !this.last || !this.email || !this.password || !this.terms) {
-        this.snackbar.message = 'Please fill in all required fields';
-        this.snackbar.color = 'error'; // 显示红色警告
-        this.snackbar.show = true;
-      } else {
-        // 假设注册逻辑已成功
-        this.snackbar.message = 'Registration successful!';
-        this.snackbar.color = 'success'; // 显示绿色成功消息
-        this.snackbar.show = true;
-        // 可以在这里进行路由跳转或其他逻辑
-      }
-    },
+      onClickRegister() {
+        if (!this.first || !this.last || !this.email || !this.password || !this.terms) {
+          this.snackbar.message = 'Please fill in all required fields';
+          this.snackbar.color = 'error'; // 显示红色警告
+          this.snackbar.show = true;
+        } else {
+          // 假设注册逻辑已成功
+          this.snackbar.message = 'Registration successful!';
+          this.snackbar.color = 'success'; // 显示绿色成功消息
+          this.snackbar.show = true;
+          // 可以在这里进行路由跳转或其他逻辑
+        }
+      },
 
   }
   }
