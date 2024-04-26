@@ -3,7 +3,7 @@
         app
         expand-on-hover
         rail
-        absolute
+        disable-resize-watcher
       >
         <v-list>
           <v-list-item
