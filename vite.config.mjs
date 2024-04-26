@@ -16,7 +16,7 @@ export default defineConfig({
     }),
     Vuetify(),
     Components({
-      dirs: ['src/Views'], // 指定自动导入组件的目录
+      dirs: ['src/components', 'src/layouts', 'src/views'], // 指定自动导入组件的目录
     }),
     ViteFonts({
       google: {

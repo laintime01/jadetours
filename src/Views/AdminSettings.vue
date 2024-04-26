@@ -1,13 +1,13 @@
 <template>
-  <v-container class="h-50">
+  <v-container>
     <v-row>
       <v-col>
         <v-card>
           <v-card-title>
-            <h3>Admin Dashboard</h3>
+            <h3>Admin Settings</h3>
           </v-card-title>
           <v-card-text>
-            <p>Welcome to the admin dashboard</p>
+            <p>Settings for the admin</p>
           </v-card-text>
         </v-card>
       </v-col>
@@ -17,7 +17,6 @@
 
 <script>
 export default{
-  name: 'AdminDashboard',
+  name: 'AdminSettings',
 }
-
 </script>
