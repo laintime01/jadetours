@@ -22,5 +22,5 @@ To get this project up and running on your local machine, follow these steps:
 - Node.js (recommended version 14.x or above)
 - npm (Node Package Manager)
 - 
-### License
+## License
 - This project is licensed under the MIT License - see the LICENSE file for details.

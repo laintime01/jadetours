@@ -53,6 +53,7 @@
         size="large"
         variant="tonal"
         block
+        @click="onClickLogin"
       >
         Log In
       </v-btn>
@@ -78,6 +79,11 @@
       password: '',
     }
   },
+  methods: {
+    onClickLogin(){
+      this.$router.push('/dashboard')
+    }
+  }
 }
 
 
