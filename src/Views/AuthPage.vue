@@ -1,11 +1,10 @@
 <template>
-  <v-app>
-    <div class="d-flex justify-center align-center" style="height: 100vh;">
+    <v-container class="d-flex justify-center align-center" style="height: 100vh;">
+      <v-col cols="12" sm="8" md="6" lg="3" class="mx-auto">
       <v-card
         class="mx-auto pa-12 pb-8"
         color="white"
         elevation="8"
-        width="100%"
         rounded="lg"
       >
         <v-card-title class="text-center">
@@ -62,13 +61,14 @@
         <v-card-text class="text-center">
           <router-link
             class="text-blue text-decoration-none mt-12"
-            to="/signup"
+            to="/auth/signup"
           >
             Sign up now <v-icon icon="mdi-chevron-right"></v-icon>
           </router-link>
         </v-card-text>
       </v-card>
-    </div>
+    </v-col>
+    </v-container>
     <!-- 消息 -->
     <v-snackbar
         v-model="snackbar.show"
@@ -78,7 +78,6 @@
       >
         {{ snackbar.message }}
       </v-snackbar>
-  </v-app>
 </template>
 <script>
   export default {
@@ -102,8 +101,8 @@
       this.snackbar.color = 'success'; // 显示绿色信息
       this.$nextTick(() => {
         setTimeout(() => {
-          this.$router.push('/dashboard');
-        }, 1000);
+          this.$router.push('/');
+        }, 500);
       });
     }
   }
