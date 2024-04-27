@@ -8,8 +8,8 @@
         <v-list>
           <v-list-item
             prepend-avatar="https://randomuser.me/api/portraits/women/85.jpg"
-            subtitle="sandra_a88@gmailcom"
-            title="Sandra Adams"
+            subtitle="Jade Tours"
+            title="Grace Ho"
           ></v-list-item>
         </v-list>
         <v-divider></v-divider>
