@@ -1,23 +1,135 @@
 <template>
-  <v-container class="h-50">
-    <v-row>
-      <v-col>
-        <v-card>
-          <v-card-title>
-            <h3>Admin Dashboard</h3>
-          </v-card-title>
-          <v-card-text>
-            <p>Welcome to the admin dashboard</p>
-          </v-card-text>
-        </v-card>
-      </v-col>
-    </v-row>
-  </v-container>
+  <v-app>
+    <v-main>
+      <v-container>
+        <v-row>
+          <v-col cols="12">
+            <v-card>
+              <v-card-title>搜索</v-card-title>
+              <v-card-text>
+                <v-form>
+                  <v-row>
+                    <v-col cols="3">
+                      <v-text-field label="出发城市" outlined></v-text-field>
+                    </v-col>
+                    <v-col cols="3">
+                      <v-text-field label="目的地" outlined></v-text-field>
+                    </v-col>
+                    <v-col cols="3">
+                      <v-menu
+                        ref="menu"
+                        v-model="menu"
+                        :close-on-content-click="false"
+                        :return-value.sync="date"
+                        transition="scale-transition"
+                        offset-y
+                        min-width="auto"
+                      >
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-text-field
+                            v-model="date"
+                            label="出发日期"
+                            readonly
+                            v-bind="attrs"
+                            v-on="on"
+                            outlined
+                          ></v-text-field>
+                        </template>
+                        <v-date-picker v-model="date" no-title scrollable>
+                          <v-spacer></v-spacer>
+                          <v-btn text color="primary" @click="menu = false">
+                            取消
+                          </v-btn>
+                          <v-btn text color="primary" @click="$refs.menu.save(date)">
+                            确定
+                          </v-btn>
+                        </v-date-picker>
+                      </v-menu>
+                    </v-col>
+                    <v-col cols="3">
+                      <v-select
+                        label="旅行类型"
+                        :items="travelTypes"
+                        outlined
+                      ></v-select>
+                    </v-col>
+                  </v-row>
+                  <v-row>
+                    <v-col cols="12" class="text-right">
+                      <v-btn color="primary" @click="search">
+                        搜索
+                      </v-btn>
+                    </v-col>
+                  </v-row>
+                </v-form>
+              </v-card-text>
+            </v-card>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col cols="12">
+            <v-card>
+              <v-card-title>搜索结果</v-card-title>
+              <v-card-text>
+                <v-data-table
+                  :headers="headers"
+                  :items="results"
+                  :loading="loading"
+                  :sort-desc.sync="sortDesc"
+                  class="elevation-1"
+                >
+                  <template #[`item.price`]="{ item }">
+                    {{ formatCurrency(item.price) }}
+                  </template>
+                  <template #[`item.rating`]="{ item }">
+                    <v-rating :value="item.rating" color="amber" dense small readonly></v-rating>
+                  </template>
+                </v-data-table>
+              </v-card-text>
+            </v-card>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-main>
+  </v-app>
 </template>
 
 <script>
-export default{
-  name: 'AdminDashboard',
-}
+import { defineComponent } from 'vue'
 
+export default defineComponent({
+  data() {
+    return {
+      menu: false,
+      date: new Date().toISOString().substr(0, 10),
+      travelTypes: ['机票', '酒店', '套餐'],
+      headers: [
+        { text: '类型', value: 'type' },
+        { text: '价格', value: 'price', align: 'right' },
+        { text: '评分', value: 'rating', align: 'right' }
+      ],
+      results: [],
+      loading: false,
+      sortBy: 'price',
+      sortDesc: false
+    }
+  },
+  methods: {
+    search() {
+      // 这里调用GDS API获取搜索结果
+      this.loading = true
+      setTimeout(() => {
+        this.results = [
+          { type: '机票', price: 2999.99, rating: 4.8 },
+          { type: '酒店', price: 799.99, rating: 4.2 },
+          { type: '套餐', price: 3999.99, rating: 4.5 }
+        ]
+        this.loading = false
+      }, 1000)
+    },
+    formatCurrency(value) {
+      return `¥${value.toFixed(2)}`
+    }
+  }
+})
 </script>

@@ -2,7 +2,7 @@
 <template>
   <v-app>
     <v-row no-gutters>
-      <v-col cols="2">
+      <v-col cols="1">
         <DrawerNavigation />
       </v-col>
       <v-col>
