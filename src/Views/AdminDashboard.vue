@@ -9,35 +9,36 @@
               <v-card-text>
                 <v-form>
                   <v-row>
-                    <v-col cols="3">
+                    <v-col cols="6">
                       <v-text-field label="出发城市" outlined></v-text-field>
                     </v-col>
-                    <v-col cols="3">
+                    <v-col cols="6">
                       <v-text-field label="目的地" outlined></v-text-field>
                     </v-col>
-                    <v-col cols="3">
+                  </v-row>
+                  <v-row>
+                    <v-col cols="6">
                       <v-menu
-                        ref="menu"
-                        v-model="menu"
+                      ref="menu1"
+                        v-model="menu1"
                         :close-on-content-click="false"
                         :return-value.sync="date"
                         transition="scale-transition"
                         offset-y
                         min-width="auto"
                       >
-                        <template v-slot:activator="{ on, attrs }">
+                        <template v-slot:activator="{props }">
                           <v-text-field
                             v-model="date"
-                            label="出发日期"
+                            label="选择日期"
                             readonly
-                            v-bind="attrs"
-                            v-on="on"
+                            v-bind="props"
                             outlined
                           ></v-text-field>
                         </template>
                         <v-date-picker v-model="date" no-title scrollable>
                           <v-spacer></v-spacer>
-                          <v-btn text color="primary" @click="menu = false">
+                          <v-btn text color="primary" @click="menu1 = false">
                             取消
                           </v-btn>
                           <v-btn text color="primary" @click="$refs.menu.save(date)">
@@ -46,26 +47,51 @@
                         </v-date-picker>
                       </v-menu>
                     </v-col>
-                    <v-col cols="3">
-                      <v-select
-                        label="旅行类型"
-                        :items="travelTypes"
-                        outlined
-                      ></v-select>
+                    <v-col cols="6">
+                      <v-menu
+                        v-model="menu2"
+                        :close-on-content-click="false"
+                        :nudge-right="40"
+                        transition="scale-transition"
+                        offset-y
+                      >
+                        <template v-slot:activator="{ props}">
+                          <v-text-field
+                            v-model="date"
+                            label="到达日期"
+                            readonly
+                            v-bind="props"
+                            outlined
+                          ></v-text-field>
+                        </template>
+                        <v-date-picker v-model="date" @input="menu2 = false"></v-date-picker>
+                      </v-menu>
                     </v-col>
-                  </v-row>
-                  <v-row>
-                    <v-col cols="12" class="text-right">
-                      <v-btn color="primary" @click="search">
-                        搜索
-                      </v-btn>
-                    </v-col>
-                  </v-row>
-                </v-form>
-              </v-card-text>
-            </v-card>
-          </v-col>
-        </v-row>
+                    </v-row>
+                    <v-row>
+                      <v-col cols="6">
+                        <v-select
+                          label="旅行类型"
+                          outlined
+                          :items="travelTypes"
+                        ></v-select>
+                      </v-col>
+                      <v-col cols="6">
+                        <v-text-field label="人数" outlined></v-text-field>
+                      </v-col>
+                    </v-row>
+                    <v-row>
+                      <v-col cols="12" class="text-right">
+                        <v-btn color="primary" @click="search">
+                          搜索
+                        </v-btn>
+                      </v-col>
+                    </v-row>
+                  </v-form>
+                </v-card-text>
+              </v-card>
+            </v-col>
+          </v-row>
         <v-row>
           <v-col cols="12">
             <v-card>
@@ -100,9 +126,10 @@ import { defineComponent } from 'vue'
 export default defineComponent({
   data() {
     return {
-      menu: false,
-      date: new Date().toISOString().substr(0, 10),
+      menu1: false,
+      menu2: false,
       travelTypes: ['机票', '酒店', '套餐'],
+      date: new Date(),
       headers: [
         { text: '类型', value: 'type' },
         { text: '价格', value: 'price', align: 'right' },

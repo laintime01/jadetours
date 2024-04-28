@@ -32,7 +32,7 @@ const routes = [
     component: DefaultLayout,
     children: [
       {
-        path: "search",
+        path: "",
         name: "AdminDashboard",
         component: AdminDashboard,
       },
