@@ -1,59 +1,62 @@
 <template>
-  <v-card flat>
-    <v-card-title class="d-flex align-center pe-2">
-      <v-icon icon="mdi-video-input-component"></v-icon> &nbsp;
-      Search History
-      <v-spacer></v-spacer>
+    <v-container>
+      <v-card>
+      <v-card-title class="d-flex align-center pe-2">
+        <v-icon icon="mdi-video-input-component"></v-icon> &nbsp;
+        Search History
+        <v-spacer></v-spacer>
 
-      <v-text-field
-        v-model="search"
-        density="compact"
-        label="Search"
-        prepend-inner-icon="mdi-magnify"
-        variant="solo-filled"
-        flat
-        hide-details
-        single-line
-      ></v-text-field>
-      <v-btn>
-        <v-icon>mdi-filter</v-icon>
-      </v-btn>
-    </v-card-title>
-
-    <v-divider class="mt-4"></v-divider>
-    <v-data-table v-model:search="search" :items="items" class="mt-3">
-      <template v-slot:header.stock>
-        <div class="text-end">Stock</div>
-      </template>
-
-      <template v-slot:item.image="{ item }">
-        <v-card class="my-2" elevation="2" rounded>
-        </v-card>
-      </template>
-
-      <template v-slot:item.rating="{ item }">
-        <v-rating
-          :model-value="item.rating"
-          color="orange-darken-2"
+        <v-text-field
+          v-model="search"
           density="compact"
-          size="small"
-          readonly
-        ></v-rating>
-      </template>
+          label="Search"
+          prepend-inner-icon="mdi-magnify"
+          variant="solo-filled"
+          flat
+          hide-details
+          single-line
+        ></v-text-field>
+        <v-btn>
+          <v-icon>mdi-filter</v-icon>
+        </v-btn>
+      </v-card-title>
 
-      <template v-slot:item.stock="{ item }">
-        <div class="text-end">
-          <v-chip
-            :color="item.stock ? 'green' : 'red'"
-            :text="item.stock ? 'In stock' : 'Out of stock'"
-            class="text-uppercase"
+      <v-divider class="mt-4"></v-divider>
+      <v-data-table v-model:search="search" :items="items" class="mt-3">
+        <template v-slot:header.stock>
+          <div class="text-end">Stock</div>
+        </template>
+
+        <template v-slot:item.image="{ item }">
+          <v-card class="my-2" elevation="2" rounded>
+          </v-card>
+        </template>
+
+        <template v-slot:item.rating="{ item }">
+          <v-rating
+            :model-value="item.rating"
+            color="orange-darken-2"
+            density="compact"
             size="small"
-            label
-          ></v-chip>
-        </div>
-      </template>
-    </v-data-table>
-  </v-card>
+            readonly
+          ></v-rating>
+        </template>
+
+        <template v-slot:item.stock="{ item }">
+          <div class="text-end">
+            <v-chip
+              :color="item.stock ? 'green' : 'red'"
+              :text="item.stock ? 'In stock' : 'Out of stock'"
+              class="text-uppercase"
+              size="small"
+              label
+            ></v-chip>
+          </div>
+        </template>
+      </v-data-table>
+    </v-card>
+    </v-container>
+
 </template>
 <script>
   export default {
