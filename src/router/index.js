@@ -8,6 +8,8 @@ import AdminSearchHistory from "@/Views/AdminSearchHistory.vue";
 import AuthLayout from "@/layouts/AuthLayout.vue";
 import DefaultLayout from "@/layouts/DefaultLayout.vue";
 
+import store from '@/store/index.js';
+
 const routes = [
   {
     path: "/auth",
@@ -54,5 +56,14 @@ const router = createRouter({
   history: createWebHistory(),
   routes,
 });
+
+// add navigation guar using vuex
+router.beforeEach((to , from, next)=>{
+  if (to.name !== 'LoginPage' && to.name !== 'SignUpPage' && !store.state.isAuthenticated){
+    next({name: 'LoginPage'});
+  }else{
+    next();
+  }
+})
 
 export default router;
