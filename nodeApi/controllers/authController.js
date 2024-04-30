@@ -1,8 +1,8 @@
-const User = require('./models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const User = require('../models/user');
 
-export const login = async (req, res) => {
+const login = async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
@@ -21,7 +21,7 @@ export const login = async (req, res) => {
   }
 };
 
-export const signup = async (req, res) => {
+const signup = async (req, res) => {
   try {
     const { name, email, password } = req.body;
     let user = await User.findOne({ email });
@@ -40,7 +40,8 @@ export const signup = async (req, res) => {
   }
 };
 
-export const logout = (req, res) => {
-  // handle logout
+const logout = (req, res) => {
   res.json({ message: 'Logged out' });
 };
+
+module.exports = { login, signup, logout };
