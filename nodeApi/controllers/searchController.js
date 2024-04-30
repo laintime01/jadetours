@@ -1,17 +1,17 @@
 const Ticket = require('../models/tickets');
 
-export const searchTickets = async (req, res) => {
+const searchTickets = async (req, res) => {
   try {
     const { query } = req.params;
     const tickets = await Ticket.find({ $text: { $search: query } });
-    res.json(tickets);
+    res.status(200).json(tickets);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Server error' });
   }
 }
 
-export const searchTicketsByStatus = async (req, res) => {
+const searchTicketsByStatus = async (req, res) => {
   try {
     const { status } = req.params;
     const tickets = await Ticket.find({ status });
@@ -22,7 +22,7 @@ export const searchTicketsByStatus = async (req, res) => {
   }
 }
 
-export const searchTicketsByPriority = async (req, res) => {
+const searchTicketsByPriority = async (req, res) => {
   try {
     const { priority } = req.params;
     const tickets = await Ticket.find({
@@ -36,3 +36,5 @@ export const searchTicketsByPriority = async (req, res) => {
   }
 }
 
+
+module.exports = { searchTickets, searchTicketsByStatus, searchTicketsByPriority };
