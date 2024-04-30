@@ -1,6 +1,6 @@
 <template>
     <v-container class="d-flex justify-center align-center" style="height: 100vh;">
-      <v-col cols="12" sm="8" md="6" lg="3" class="mx-auto">
+      <v-col cols="12" xs="12" sm="8" md="6" lg="5" xl="3" class="mx-auto">
       <v-card
         class="mx-auto pa-12 pb-8"
         color="white"
