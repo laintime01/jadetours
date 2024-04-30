@@ -1,6 +1,6 @@
 import http from "./http";
 
-const loginApi = async (credentials) => {
+export const loginApi = async (credentials) => {
   try {
     const response = await http.post('/auth/login', credentials);
     return response.data;
@@ -9,7 +9,7 @@ const loginApi = async (credentials) => {
   }
 };
 
-const signupApi = async (credentials) => {
+export const signupApi = async (credentials) => {
   try {
     const response = await http.post('/auth/signup', credentials);
     return response.data;
@@ -18,18 +18,11 @@ const signupApi = async (credentials) => {
   }
 };
 
-const logoutApi = async () => {
+export const logoutApi = async () => {
   try {
     const response = await http.post('/auth/logout');
     return response.data;
   } catch (error) {
     throw error.response.data;
   }
-};
-
-
-export default {
-  loginApi,
-  signupApi,
-  logoutApi
 };

@@ -3,12 +3,12 @@ import store from '@/store';
 
 const baseUrl = 'http://localhost:3001/api';
 
-const instance = axios.create({
+const http = axios.create({
   baseURL: baseUrl,
   timeout: 1000,
 });
 
-instance.interceptors.request.use(config=>{
+http.interceptors.request.use(config=>{
   const token = store.getters['auth/token'];
   if(token){
     config.headers.Authorization = `Bearer ${token}`;
@@ -16,7 +16,7 @@ instance.interceptors.request.use(config=>{
   return config;
 });
 
-instance.interceptors.response.use(response=>{
+http.interceptors.response.use(response=>{
   return response;
 }
   , error=>{
