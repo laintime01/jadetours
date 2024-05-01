@@ -16,7 +16,7 @@
 
       <v-container>
         <v-text-field
-          v-model="first"
+          v-model="firstname"
           :rules = "[v => !!v || 'First name is required']"
           color="primary"
           label="First name"
@@ -24,7 +24,7 @@
         ></v-text-field>
 
         <v-text-field
-          v-model="last"
+          v-model="lastname"
           :rules = "[v => !!v || 'Last name is required']"
           color="primary"
           label="Last name"
@@ -47,12 +47,6 @@
           placeholder="Enter your password"
           variant="underlined"
         ></v-text-field>
-
-        <v-checkbox
-          v-model="terms"
-          color="secondary"
-          label="I agree to site terms and conditions"
-        ></v-checkbox>
       </v-container>
 
       <v-divider></v-divider>
@@ -72,7 +66,7 @@
       </v-card-actions>
     </v-card>
   </v-col>
-    <!-- 消息 -->
+    <!-- Message -->
     <v-snackbar
       v-model="snackbar.show"
       :color="snackbar.color"
@@ -85,42 +79,65 @@
   </v-container>
 </template>
 <script>
+import { signupApi } from '@/api/auth';
   export default {
     data(){
       return{
-        // 初始化 snackbar 数据
+        // init snackbar data
         snackbar: {
           show: false,
-          timeout: 2000,
-          message: ''
+          timeout: 4000,
+          message: '',
+          color: '',
         },
-        // 初始化表单数据
-        first: null,
-        last: null,
+        // init form data
+        firstname: null,
+        lastname: null,
         email: null,
         password: null,
-        terms: false,
       }
     },
     methods:{
       onClickLogin(){
-        this.$router.push('/'); // 跳转到主页
+        this.$router.push('/auth/login');
       },
-
-      onClickRegister() {
-        if (!this.first || !this.last || !this.email || !this.password || !this.terms) {
+      async onClickRegister() {
+        if (!this.firstname || !this.lastname || !this.email || !this.password) {
           this.snackbar.message = 'Please fill in all required fields';
-          this.snackbar.color = 'error'; // 显示红色警告
+          this.snackbar.color = 'error';
           this.snackbar.show = true;
-        } else {
-          // 假设注册逻辑已成功
-          this.snackbar.message = 'Registration successful!';
-          this.snackbar.color = 'success'; // 显示绿色成功消息
-          this.snackbar.show = true;
-          // 可以在这里进行路由跳转或其他逻辑
+          return;
         }
-      },
 
-  }
+        const credentials = {
+          firstname: this.firstname,
+          lastname: this.lastname,
+          email: this.email,
+          password: this.password,
+        };
+
+        try {
+          const response = await signupApi(credentials);
+          if (response.status === 201) {
+            this.snackbar.show = true;
+            this.snackbar.message = 'Registration successful! Redirecting to login page...';
+            this.snackbar.color = 'success';
+            this.$nextTick(() => {
+              setTimeout(() => {
+                this.$router.push('/auth/login');
+              }, 800);
+            });
+          } else {
+            this.snackbar.show = true;
+            this.snackbar.message = 'Registration failed!Please try again.';
+            this.snackbar.color = 'error';
+          }
+        } catch (error) {
+          this.snackbar.show = true;
+          this.snackbar.message = 'Registration process encountered an error';
+          this.snackbar.color = 'error';
+        }
+      }
+      }
   }
 </script>

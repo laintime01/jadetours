@@ -3,6 +3,9 @@ const express = require('express');
 const app = express();
 app.use(express.json());
 
+const cors = require('cors');
+app.use(cors());  // allow requests from all origins
+
 // Connect to MongoDB
 const { connectDB } = require('./db/mongoose');
 connectDB();

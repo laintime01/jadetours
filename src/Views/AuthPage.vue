@@ -69,7 +69,7 @@
       </v-card>
     </v-col>
     </v-container>
-    <!-- 消息 -->
+    <!-- Message -->
     <v-snackbar
         v-model="snackbar.show"
         :color="snackbar.color"
@@ -90,7 +90,7 @@
         show: false,
         color: '',
         timeout: 3000,
-        message: 'Hi'
+        message: ''
       }
     }
   },
