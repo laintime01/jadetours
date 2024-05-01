@@ -3,26 +3,29 @@ import http from "./http";
 export const loginApi = async (credentials) => {
   try {
     const response = await http.post('/auth/login', credentials);
-    return response.data;
+    return response;
   } catch (error) {
-    throw error.response.data;
+    throw error.response.message;
   }
 };
 
 export const signupApi = async (credentials) => {
   try {
+    console.log("cre:" + JSON.stringify(credentials))
     const response = await http.post('/auth/signup', credentials);
-    return response.data;
+    console.log("res:" + response)
+    return response;
   } catch (error) {
-    throw error.response.data;
+    throw error;
   }
 };
 
 export const logoutApi = async () => {
   try {
     const response = await http.post('/auth/logout');
-    return response.data;
+    return response.message;
   } catch (error) {
-    throw error.response.data;
+    throw error.response.message;
   }
 };
+
