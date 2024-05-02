@@ -11,9 +11,7 @@ export const loginApi = async (credentials) => {
 
 export const signupApi = async (credentials) => {
   try {
-    console.log("cre:" + JSON.stringify(credentials))
     const response = await http.post('/auth/signup', credentials);
-    console.log("res:" + response)
     return response;
   } catch (error) {
     throw error;

@@ -1,18 +1,29 @@
 import { createStore } from 'vuex';
-import {loginApi, signupApi, logoutApi} from "@/api/auth.js";
+import {loginApi,logoutApi} from "@/api/auth.js";
 
-export default createStore({
+const store = createStore({
   state: {
     isAuthenticated: false,
     token : localStorage.getItem('token') || null,
     error: null
   },
   mutations: {
+    initializeStore(state){
+      if(localStorage.getItem('token')){
+        state.token = localStorage.getItem('token');
+        state.isAuthenticated = true;
+      }else{
+        state.token = null;
+        state.isAuthenticated = false;
+      }
+    },
     setToken(state, token){
+      localStorage.setItem('token', token);
       state.token = token;
       state.isAuthenticated = true;
     },
     clearToken(state){
+      localStorage.removeItem('token');
       state.token = null;
       state.isAuthenticated = false;
     },
@@ -27,27 +38,22 @@ export default createStore({
     async login({commit}, credentials){
       try {
         const response = await loginApi(credentials);
-        commit('setToken', response.token);
-        commit('setisAuthenticated', true);
-        commit('setError', null);
+        if(response.status ===200 && response.data.token){
+          commit('setToken', response.data.token);
+          commit('setisAuthenticated', true);
+          commit('setError', null);
+        }else{
+          commit('isAuthenticated', false);
+          commit('setError', 'Login failed!');
+          throw new Error('Login failed!');
+        }
       } catch (error) {
         commit('setisAuthenticated', false);
-        commit('setError', error.message || 'Login failed!');
+        commit('setError', error.message || 'Login failed, please try again later!');
         throw error;
       }
     },
-    async signup({commit}, credentials){
-      try {
-        const response = await signupApi(credentials);
-        commit('setToken', response.token);
-        commit('setisAuthenticated', true);
-        commit('setError', null);
-      } catch (error) {
-        commit('setisAuthenticated', false);
-        commit('setError', error.message || 'Signup failed!');
-        throw error;
-      }
-    },
+
     async logout({commit}){
       try {
         await logoutApi();
@@ -61,3 +67,7 @@ export default createStore({
     }
   },
 });
+
+store.commit('initializeStore');
+
+export default store;

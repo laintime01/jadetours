@@ -80,6 +80,7 @@
       </v-snackbar>
 </template>
 <script>
+import {useStore} from 'vuex';
   export default {
     data(){
       return{
@@ -95,20 +96,31 @@
     }
   },
   methods: {
-    onClickLogin(){
-      this.snackbar.show = true;
-      this.snackbar.message = 'Redirecting to login page...';
-      this.snackbar.color = 'success'; // 显示绿色信息
-      this.$nextTick(() => {
-        setTimeout(() => {
+    async onClickLogin(){
+      const credentials = {
+        email: this.email,
+        password: this.password
+      }
+      try{
+        await this.store.dispatch('login', credentials);
+        this.snackbar.message = 'Login successful';
+        this.snackbar.color = 'success';
+        this.snackbar.show = true;
+        this.$nextTick(() => {
           this.$router.push('/');
-        }, 500);
-      });
+        });
+    }catch(error){
+      this.snackbar.message = this.store.state.error;
+      this.snackbar.color = 'error';
+      this.snackbar.show = true;
     }
   }
+},
+  setup(){
+    const store = useStore();
+    return {store}
+  }
 }
-
-
 </script>
 
 
