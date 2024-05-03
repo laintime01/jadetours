@@ -6,11 +6,11 @@ app.use(express.json());
 const cors = require('cors');
 app.use(cors());  // allow requests from all origins
 
-// Connect to MongoDB
-const { connectDB } = require('./db/mongoose');
+const { connectDB } = require('./db/mongoose'); // Connect to MongoDB
 connectDB();
 
-// Routes
+app.use(require('./middleware/xmlToJsonMiddleware'));
+
 const authRoutes = require('./routes/auth');
 const searchRoutes = require('./routes/search');
 
