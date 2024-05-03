@@ -12,10 +12,10 @@ connectDB();
 app.use(require('./middleware/xmlToJsonMiddleware'));
 
 const authRoutes = require('./routes/auth');
-const searchRoutes = require('./routes/search');
+const searchRoutes = require('./routes/searchFlight');
 
 app.use('/auth', authRoutes);
-app.use('/search', searchRoutes);
+app.use('/flight', searchRoutes);
 
 const Port = 8000;
 
