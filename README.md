@@ -7,11 +7,12 @@ Jade Tours Online Booking System is a web-based application designed to facilita
 - User authentication for login and registration
 - Tour browsing and selection
 - Booking management
+- Generate fake GDS data for developing
 - Responsive design for both desktop and mobile devices
 
 ## Tech Stack
 - **Frontend**: Vue3, Vuetify
-- **Backend**: SpringBoot
+- **Backend**: NodeJs
 - **Database**: MongoDB
 - **DevOps**: Vite for build optimization and local development server
 
